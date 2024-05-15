@@ -7,12 +7,14 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,6 +43,7 @@ class ProductResource extends Resource
                     'large' => 'large',
                 ])->required(),
                 MarkdownEditor::make('description')->required(),
+                FileUpload::make('thumbnail')->label('Product Image')->disk('public')->directory('thumbnail')->required(),
             ]);
     }
 
@@ -52,6 +55,7 @@ class ProductResource extends Resource
                 TextColumn::make('product_code'),
                 TextColumn::make('category.name'),
                 TextColumn::make('size'),
+                ImageColumn::make('thumbnail')->label('Product Image'),
             ])
             ->filters([
                 //
