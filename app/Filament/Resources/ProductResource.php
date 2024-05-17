@@ -76,17 +76,20 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('product_code'),
-                TextColumn::make('category.name'),
+                TextColumn::maKe('id')->sortable()->searchable()->toggleable(isToggledHiddenByDefault:true),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('product_code')->searchable(),
+                TextColumn::make('category.name')->sortable()->searchable(),
                 TextColumn::make('size'),
                 ImageColumn::make('thumbnail')->label('Product Image'),
+                TextColumn::make('created_at')->label('Created On')->sortable()->date()->toggleable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
